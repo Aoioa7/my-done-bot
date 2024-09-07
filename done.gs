@@ -14,7 +14,7 @@ function myFunction() {
 }
 
 //今回は月水金のタイミングでその日を除いて新しくデプロイされた機能を通知
-//場合分けが月曜だけなのは、トリガーですでに月水金に絞り込んでいるから
+//場合分けが月曜だけなのは、トリガーですでに月水金(の12:00)に絞り込んでいるから
 function notDeployed(date) {
   const theDay = new Date(date);
   const today = new Date;
@@ -25,10 +25,10 @@ function notDeployed(date) {
   const day1 = new Date(date);
   const diff = (today-theDay)/86400000;
   console.log(diff)
-  if (youbi == 1 && diff <= 1) {
+  if (youbi == 1 && diff <= 3) {
     return true
   }
-  else if (diff <= 1) {
+  else if (diff <= 2) {
     return true
   };
 
