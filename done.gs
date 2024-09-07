@@ -1,5 +1,5 @@
 //この関数で統一して、トリガーで定期実行
-//毎週月水金に、前日までに完了したタスクごとに、自分のNotionページのタイトルとURLをSlackのチャンネルに通知するbot
+//毎週月水金に、その日の午前までに新しく完了したタスクごとに、自分のNotionページのタイトルとURLをSlackのチャンネルに通知するbot
 function myFunction() {
   const data = getNotionData("c5690bfc5c6f4122a91a1e01dcfaf45f");
   const messages = data.results;
