@@ -1,11 +1,11 @@
-//ここで統一
-//毎週月水金に、前日までにマージされた機能ごとに、NotionページのタイトルとURLをSlackのチャンネルに通知するbot
+//この関数で統一して、トリガーで定期実行
+//毎週月水金に、前日までに完了したタスクごとに、自分のNotionページのタイトルとURLをSlackのチャンネルに通知するbot
 function myFunction() {
   const data = getNotionData("c5690bfc5c6f4122a91a1e01dcfaf45f");
   const messages = data.results;
 
   for (m of messages) {
-    if (notDeployed(m.properties.マージ日時.date.start)) {continue};
+    if (notDeployed(m.properties.完了日時.date.start)) {continue};
     const message = {
       "text":m.properties.Name.title[0]?.plain_text+"\n"+m.url+"\n---",
     };
@@ -13,8 +13,9 @@ function myFunction() {
   }
 }
 
-//今回は月水金のタイミングでその日を除いて新しくデプロイされた機能を通知
+//今回は月水金のタイミングでその日の午前までに新しく完了したタスクを通知
 //場合分けが月曜だけなのは、トリガーですでに月水金(の12:00)に絞り込んでいるから
+//コンソールに日時情報を出力(確認用)
 function notDeployed(date) {
   const theDay = new Date(date);
   const today = new Date;
@@ -48,7 +49,7 @@ function sendSlackMessage(payload) {
   UrlFetchApp.fetch(url, options);
 }
 
-//doneされたページを取得
+//Notionからdoneされたページを取得
 function getNotionData(id) {
   const url = "https://api.notion.com/v1/databases/"+id+"/query";
   const token = PropertiesService.getScriptProperties().getProperty("ACCESS_TOKEN");
